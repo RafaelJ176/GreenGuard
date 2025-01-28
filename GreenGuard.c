@@ -18,6 +18,14 @@ void setup()
   pinMode(Pump,OUTPUT);
 }
 
+void ledReset(){
+
+	digitalWrite(blue25,LOW);
+    digitalWrite(green50,LOW);
+    digitalWrite(red100,LOW);
+    digitalWrite(yellow75,LOW);
+}
+
 void loop()
 {
   int SensorValue = analogRead(SoilSensor);
@@ -26,47 +34,41 @@ void loop()
   Serial.println(SensorValue);
 
   if(SensorValue<threshold25){
+    ledReset();
     digitalWrite(blue25,HIGH);
-    digitalWrite(green50,LOW);
-    digitalWrite(red100,LOW);
-    digitalWrite(yellow75,LOW);
   }
 
   else if ((SensorValue >threshold25) && (SensorValue<threshold50)){
+    ledReset();
     digitalWrite(green50,HIGH);
-    digitalWrite(blue25,LOW);
-    digitalWrite(red100,LOW);
-    digitalWrite(yellow75,LOW);
     digitalWrite(Pump,HIGH);
     Serial.println("Pump State : On\n");
-    delay(100);
+    delay(400);
     digitalWrite(Pump,LOW); 
-    Serial.println("0.1 Sec\n");
+    Serial.println("0.4 Sec\n");
     Serial.println("Pump State : Off\n");
   }
   else if((SensorValue >threshold50) && (SensorValue<threshold75)){
+    ledReset();
     digitalWrite(yellow75,HIGH);
-    digitalWrite(green50,LOW);
-    digitalWrite(red100,LOW);
-    digitalWrite(blue25,LOW);
+    digitalWrite(Pump,HIGH);
     Serial.println("Pump State : On\n");
-    delay(200);
+    delay(600);
     digitalWrite(Pump,LOW); 
-    Serial.println("0.2 Sec\n");
+    Serial.println("0.6 Sec\n");
     Serial.println("Pump State : Off\n");
   }
   else if(SensorValue >threshold75){
+    ledReset();
     digitalWrite(red100,HIGH);
-    digitalWrite(green50,LOW);
-    digitalWrite(blue25,LOW);
-    digitalWrite(yellow75,LOW);
+    digitalWrite(Pump, HIGH);
     Serial.println("Pump State : On\n");
-    delay(300);
+    delay(800);
     digitalWrite(Pump,LOW); 
-    Serial.println("0.3 Sec\n");
+    Serial.println("0.8 Sec\n");
     Serial.println("Pump State : Off\n");
   }
 
-
-  delay(100000);
+  
+  delay(300000);
 }
